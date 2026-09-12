@@ -17,7 +17,6 @@ import { StatisticsService } from './services/statistics.service';
 export class App {
   readonly game = inject(BlackjackGameService); readonly statistics = inject(StatisticsService); readonly settings = inject(SettingsService);
   readonly settingsOpen = signal(false);
-  readonly statisticsOpen = signal(false);
 
   saveSettings(decks: DeckCount): void { const changed = decks !== this.settings.decks(); this.settings.save(decks); if (changed) this.game.nextHand(); this.settingsOpen.set(false); }
 }

@@ -1,7 +1,7 @@
 <header class="app-header"><a class="brand" href="./" aria-label="בלאק ג׳ק - מאמן אסטרטגיה"><span class="brand-spade"
             aria-hidden="true">♠</span>
         <h1><span>בלאק ג׳ק</span><span class="title-dash"> - </span>מאמן אסטרטגיה</h1>
-    </a><div class="header-actions"><button class="stats-button" aria-label="סטטיסטיקות והיסטוריה" (click)="statisticsOpen.set(true)">▥</button><button class="settings-button" (click)="settingsOpen.set(true)"><span aria-hidden="true">⚙</span>
+    </a><div class="header-actions"><button class="settings-button" (click)="settingsOpen.set(true)"><span aria-hidden="true">⚙</span>
         הגדרות</button></div></header>
 <main class="trainer-layout"><app-blackjack-table [hands]="game.hands()" [dealer]="game.dealerCards()"
         [dealerLabel]="game.dealerLabel()" [revealed]="game.dealerRevealed()" [phase]="game.phase()"
@@ -14,4 +14,3 @@
 </main>
 @if (settingsOpen()) { <app-settings-dialog [decks]="settings.decks()" (save)="saveSettings($event)"
     (close)="settingsOpen.set(false)" /> }
-@if (statisticsOpen()) { <div class="mobile-sheet-backdrop" (click)="statisticsOpen.set(false)"><section class="mobile-sheet" (click)="$event.stopPropagation()"><button class="sheet-close" (click)="statisticsOpen.set(false)">×</button><app-statistics-panel [stats]="statistics.stats()" [accuracy]="statistics.accuracy()" (clear)="statistics.clear()" /><app-recent-decisions [decisions]="statistics.stats().recent" /></section></div> }

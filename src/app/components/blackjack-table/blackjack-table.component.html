@@ -11,37 +11,32 @@
         <div class="shoe-front"><span>♠</span><small>GOOD PLAYERS<br>MAKE BETTER<br>DECISIONS</small></div>
       </div>
       <div class="hand-area dealer-area">
-        <h2>הבית <span>DEALER</span></h2>
         <div class="card-tray" dir="ltr">
           @for (card of dealer(); track $index) { <app-playing-card [card]="card"
             [hidden]="$index === 0 && !revealed()" /> }
         </div>
-        <div class="hand-total dealer-total">{{ dealerLabel() }}</div>
       </div>
       <div class="felt-lettering" aria-hidden="true">
         <div class="lettering-line">BLACKJACK PAYS 3 TO 2</div>
         <div class="lettering-sub">♠ &nbsp; DEALER STANDS ON 17 &nbsp; ♠</div>
         <div class="lettering-diamond">◆</div>
       </div>
-      <div class="player-area playable-hands" [class.split-hands]="hands().length > 1">
-        @for (hand of hands(); track $index) {
-        <section class="player-seat" [class.active-seat]="hand.active && phase() === 'player-turn'"
-          [class.busted-seat]="hand.bust">
-          <h2>{{ hands().length > 1 ? 'יד ' + ($index + 1) : 'היד שלך' }}
-            @if (hand.doubled) { <span class="double-badge">×2</span> }
-            @if (hand.active && phase() === 'player-turn') { <span class="turn-dot" aria-label="היד הפעילה"></span> }
-          </h2>
-          <div class="player-cards" dir="ltr">
-            @for (card of hand.cards; track $index) { <app-playing-card [card]="card" /> }
-          </div>
-          <div class="hand-total">{{ hand.value ?? '—' }} @if (hand.soft) { <small>רכה</small> }</div>
-          @if (hand.result; as result) { <div class="seat-result" [class.green]="result.net > 0"
-            [class.red]="result.net < 0">{{ outcomes[result.outcome] }} · {{ result.net > 0 ? '+' : '' }}{{ result.net
-            }}</div> }
-        </section>
-        }
+      <div class="player-feedback-stack">
+        <div class="player-area playable-hands" [class.split-hands]="hands().length > 1">
+          @for (hand of hands(); track $index) {
+          <section class="player-seat" [class.active-seat]="hand.active && phase() === 'player-turn'"
+            [class.busted-seat]="hand.bust">
+            <div class="player-cards" dir="ltr">
+              @for (card of hand.cards; track $index) { <app-playing-card [card]="card" /> }
+            </div>
+            @if (hand.result; as result) { <div class="seat-result" [class.green]="result.net > 0"
+              [class.red]="result.net < 0">{{ outcomes[result.outcome] }} · {{ result.net > 0 ? '+' : '' }}{{ result.net
+              }}</div> }
+          </section>
+          }
+        </div>
+        <app-feedback-panel class="table-feedback" [feedback]="feedback()" />
       </div>
-      <app-feedback-panel class="table-feedback" [feedback]="feedback()" />
       @if (phase() === 'round-complete') {
       <section class="round-result" [class.won-round]="net() > 0" [class.lost-round]="net() < 0" role="status"
         aria-live="polite">

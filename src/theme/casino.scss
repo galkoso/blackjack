@@ -119,9 +119,35 @@ app-recent-decisions {
 
 .header-actions { display: flex; align-items: center; gap: 9px; }
 .stats-button { width: 43px; height: 43px; border: 1px solid #34424c; border-radius: 7px; color: var(--gold); background: #101d25; font-size: 25px; }
-.table-feedback { position: absolute; left: 50%; bottom: 27%; width: min(79%, 690px); transform: translateX(-50%); z-index: 4; }
+.player-feedback-stack {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(155px, calc(14vh + 20px), 195px);
+    width: min(88%, 760px);
+    transform: translateX(-50%);
+    display: grid;
+    justify-items: center;
+    gap: clamp(12px, 1.8vh, 22px);
+    z-index: 4;
+}
+
+.player-feedback-stack .player-area,
+.player-feedback-stack .playable-hands {
+    position: static;
+    inset: auto;
+    width: 100%;
+    transform: none;
+}
+
+.player-feedback-stack .table-feedback {
+    position: static;
+    width: min(90%, 690px);
+    transform: none;
+}
 .table-feedback .feedback-banner { width: 100%; text-align: right; cursor: pointer; }
 .table-feedback .feedback-banner small { display: block; margin-top: 7px; color: #b8d5c7; }
+.table-feedback .recommendation { display: none; }
+
 .mobile-sheet-backdrop { position: fixed; inset: 0; z-index: 20; display: flex; align-items: flex-end; background: #0009; }
 .mobile-sheet { position: relative; width: 100%; max-height: 88svh; overflow: auto; padding: 28px 16px calc(20px + env(safe-area-inset-bottom)); border-radius: 20px 20px 0 0; background: #091821; box-shadow: 0 -8px 30px #0009; }
 .sheet-close { position: absolute; top: 10px; left: 14px; width: 34px; height: 34px; border: 1px solid #48606e; border-radius: 50%; color: var(--text); background: transparent; font-size: 25px; }
@@ -1479,7 +1505,7 @@ fieldset>small {
     .trainer-layout { display: block; }
     .table-shell { height: calc(100svh - 64px); min-height: 620px; }
     .sidebar { display: none; }
-    .table-feedback { bottom: 23%; width: 82%; }
+    .table-feedback { bottom: clamp(155px, 18vh, 210px); width: 82%; }
     .table-feedback .feedback-banner { min-height: 78px; padding: 12px 14px; }
     .table-feedback .feedback-banner h2 { font-size: 18px; }
     .table-feedback .feedback-banner p { font-size: 11px; }
@@ -1490,7 +1516,7 @@ fieldset>small {
 
 @media (max-width: 400px) {
     .action-buttons { grid-template-columns: repeat(2, 1fr); }
-    .table-feedback { bottom: 29%; }
+    .table-feedback { bottom: clamp(145px, 19vh, 190px); }
 }
 
 @media (max-width: 560px) {
@@ -1793,6 +1819,23 @@ fieldset>small {
 
     .dialog-content {
         padding: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .player-feedback-stack {
+        bottom: calc(clamp(146px, calc(15vh + 20px), 175px) + env(safe-area-inset-bottom));
+        width: 94%;
+        gap: clamp(10px, 1.5vh, 16px);
+    }
+
+    .player-feedback-stack .table-feedback { width: 88%; }
+}
+
+@media (max-width: 400px) {
+    .player-feedback-stack {
+        bottom: calc(clamp(225px, calc(25vh + 20px), 255px) + env(safe-area-inset-bottom));
+        gap: 8px;
     }
 }
 
