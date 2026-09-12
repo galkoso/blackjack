@@ -1,0 +1,461 @@
+/* Card motion is presentational; service timing gates actions independently. */
+.dealt-card {
+  display: block;
+  flex: 0 0 auto;
+  --card-width: 82px;
+  --card-height: 119px;
+  width: var(--card-width);
+  height: var(--card-height);
+}
+
+.card-in-flight {
+  animation: deal-from-shoe 360ms cubic-bezier(.2, .65, .25, 1) both;
+}
+
+.card-motion {
+  width: 100%;
+  height: 100%;
+  perspective: 900px;
+}
+
+.card-flipper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 480ms cubic-bezier(.3, .1, .25, 1);
+}
+
+.card-flipper.face-down {
+  transform: rotateY(180deg);
+}
+
+.card-flipper>.playing-card {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card-flipper>.card-back {
+  transform: rotateY(180deg);
+}
+
+.dealer-area {
+  width: 78%;
+}
+
+.card-tray {
+  min-height: 143px;
+  max-width: 100%;
+  justify-content: center;
+}
+
+.card-tray app-playing-card+app-playing-card {
+  margin-left: -14px;
+}
+
+.playable-hands {
+  position: absolute;
+  bottom: 177px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 88%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.player-seat {
+  min-width: 0;
+  flex: 0 1 340px;
+  text-align: center;
+  padding: 10px 6px 8px;
+  border: 1px solid transparent;
+  border-radius: 13px;
+  background: #00362020;
+  transition: border-color .2s, background .2s;
+}
+
+.active-seat {
+  border-color: #d9bd7080;
+  background: #cdb77b0b;
+  box-shadow: 0 0 18px #d4bb7310;
+}
+
+.player-seat h2 {
+  font-size: 18px;
+  margin: 0 0 12px;
+}
+
+.player-seat .player-cards {
+  gap: 0;
+  min-height: 128px;
+  justify-content: center;
+  padding-right: 16px;
+}
+
+.player-seat .dealt-card {
+  --card-width: 88px;
+  --card-height: 128px;
+  margin-right: -16px;
+}
+
+.player-cards app-playing-card:first-child,
+.player-cards app-playing-card:last-child {
+  transform: none;
+}
+
+.player-seat .hand-total {
+  display: inline-block;
+  font-size: 23px;
+  margin-top: 10px;
+}
+
+.turn-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 50%;
+  background: #e6c985;
+  box-shadow: 0 0 8px #e6c98566;
+}
+
+.double-badge {
+  padding: 2px 5px;
+  border: 1px solid #73a0ca;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #c4e5ff;
+  margin-right: 6px;
+}
+
+.seat-result {
+  font-size: 11px;
+  margin-top: 8px;
+}
+
+.busted-seat .hand-total {
+  color: #ff9ba5;
+  border-color: #d55a6c;
+}
+
+.split-hands {
+  gap: 7px;
+  width: 94%;
+}
+
+.split-hands .player-seat {
+  flex: 1 1 0;
+  padding-inline: 3px;
+}
+
+.split-hands .dealt-card {
+  --card-width: 65px;
+  --card-height: 95px;
+  margin-right: -25px;
+}
+
+.split-hands .player-cards {
+  min-height: 95px;
+  padding-right: 25px;
+}
+
+.split-hands .card-suit {
+  font-size: 42px;
+}
+
+.split-hands .card-corner {
+  font-size: 15px;
+  left: 5px;
+  top: 5px;
+}
+
+.split-hands .card-corner b {
+  font-size: 17px;
+}
+
+.split-hands .corner-bottom {
+  top: auto;
+  left: auto;
+  right: 5px;
+  bottom: 5px;
+}
+
+.round-status {
+  height: 24px;
+  margin-bottom: 8px;
+  color: #d7e8d9;
+  font-size: 13px;
+}
+
+.round-result {
+  position: absolute;
+  z-index: 5;
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(390px, 80%);
+  text-align: center;
+  padding: 12px 20px 15px;
+  border: 1px solid #bba571;
+  background: linear-gradient(115deg, #102922f5, #061a17f5);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px #001a14a0;
+  animation: result-appear 250ms ease-out;
+}
+
+.round-result h2 {
+  color: #f5d798;
+  font-size: 28px;
+  margin: 3px 0 6px;
+}
+
+.round-result p {
+  font-size: 18px;
+  color: #e3ece8;
+}
+
+.round-result small {
+  display: block;
+  font-size: 11px;
+  color: #acc6b9;
+  margin-top: 9px;
+}
+
+.round-result small span {
+  font-size: 9px;
+}
+
+.result-flourish {
+  color: #e4c477;
+  font-size: 18px;
+}
+
+.lost-round {
+  border-color: #b97877;
+}
+
+.lost-round h2 {
+  color: #ffafb2;
+}
+
+.won-round {
+  border-color: #56c79b;
+  box-shadow: 0 8px 30px #001a14a0, 0 0 25px #4bd29416;
+}
+
+@keyframes deal-from-shoe {
+  from {
+    transform: translate(var(--deal-x, 150px), var(--deal-y, -200px)) rotate(18deg) scale(.65);
+    opacity: .3;
+    filter: drop-shadow(0 10px 12px #0008);
+  }
+
+  to {
+    transform: translate(0, 0) rotate(0) scale(1);
+    opacity: 1;
+    filter: drop-shadow(0 2px 2px #0003);
+  }
+}
+
+@keyframes result-appear {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@media (min-width: 1550px) {
+  .dealt-card {
+    --card-width: 94px;
+    --card-height: 137px;
+  }
+
+  .card-tray {
+    min-height: 159px;
+  }
+
+  .playable-hands {
+    bottom: 194px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .split-hands .dealt-card {
+    --card-width: 57px;
+    --card-height: 84px;
+    margin-right: -30px;
+  }
+
+  .split-hands .player-cards {
+    padding-right: 30px;
+    min-height: 84px;
+  }
+
+  .split-hands .card-suit {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 560px) {
+  .dealt-card {
+    --card-width: 61px;
+    --card-height: 89px;
+  }
+
+  .card-tray {
+    min-height: 109px;
+  }
+
+  .dealer-area {
+    width: 88%;
+  }
+
+  .playable-hands {
+    bottom: 157px;
+    width: 94%;
+  }
+
+  .player-seat {
+    padding: 7px 3px;
+  }
+
+  .player-seat h2 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .player-seat .dealt-card {
+    --card-width: 68px;
+    --card-height: 99px;
+    margin-right: -24px;
+  }
+
+  .player-seat .player-cards {
+    min-height: 99px;
+    padding-right: 24px;
+  }
+
+  .player-seat .hand-total {
+    font-size: 20px;
+    padding: 4px 10px;
+    min-width: 48px;
+    margin-top: 8px;
+  }
+
+  .split-hands {
+    gap: 3px;
+  }
+
+  .split-hands .dealt-card {
+    --card-width: 46px;
+    --card-height: 68px;
+    margin-right: -32px;
+  }
+
+  .split-hands .player-cards {
+    padding-right: 32px;
+    min-height: 68px;
+  }
+
+  .split-hands .card-suit {
+    font-size: 28px;
+  }
+
+  .split-hands .card-corner {
+    font-size: 12px;
+    top: 3px;
+    left: 3px;
+  }
+
+  .split-hands .card-corner b {
+    font-size: 14px;
+  }
+
+  .split-hands .corner-bottom {
+    top: auto;
+    left: auto;
+    right: 3px;
+    bottom: 3px;
+  }
+
+  .split-hands .hand-total {
+    min-width: 35px;
+    padding-inline: 5px;
+  }
+
+  .split-hands .player-seat h2 {
+    font-size: 12px;
+  }
+
+  .seat-result {
+    font-size: 9px;
+  }
+
+  .double-badge {
+    font-size: 10px;
+    margin-right: 2px;
+  }
+
+  .turn-dot {
+    margin-right: 3px;
+    width: 4px;
+    height: 4px;
+  }
+
+  .round-status {
+    height: 18px;
+    margin-bottom: 5px;
+    font-size: 11px;
+  }
+
+  .round-result {
+    top: 35%;
+    padding: 8px 10px;
+    width: 80%;
+  }
+
+  .round-result h2 {
+    font-size: 22px;
+  }
+
+  .round-result p {
+    font-size: 15px;
+  }
+
+  .result-flourish {
+    display: none;
+  }
+
+  .round-result small {
+    font-size: 10px;
+    margin-top: 5px;
+  }
+
+  .round-result small span {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .card-in-flight,
+  .round-result {
+    animation: none;
+  }
+
+  .card-flipper {
+    transition: none;
+  }
+}

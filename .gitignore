@@ -3,3 +3,6 @@ dist/
 .angular/
 out-tsc/
 .DS_Store
+
+/test-results/
+/playwright-report/

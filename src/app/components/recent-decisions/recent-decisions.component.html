@@ -1,0 +1,15 @@
+<section class="panel recent">
+    <h3>החלטות אחרונות <span class="small-caption">{{ decisions().length }} אחרונות</span></h3>
+    @if (decisions().length) {
+    <div class="recent-list">@for (d of decisions(); track d.id) { <div class="recent-row"
+            [title]="'המהלך המומלץ: ' + d.recommended + ' · ' + d.decks + ' חפיסות'"><span class="result-dot"
+                [class.bad]="!d.correct">{{ d.correct ? '✓' : '×' }}</span><span><b dir="ltr">{{ d.player }}</b><small>
+                    מול </small><b>{{ d.dealer }}</b></span><span class="recent-action" dir="ltr">{{ d.action
+                }}</span><span [class]="d.correct ? 'green' : 'red'">{{ d.correct ? 'נכון' : 'טעות' }}</span></div> }
+    </div>
+    } @else {
+    <div class="empty-recent"><span>♤</span>
+        <p>היד הראשונה היא רק ההתחלה</p><small>ההחלטות שלך יופיעו כאן אחרי כל מהלך</small>
+    </div>
+    }
+</section>

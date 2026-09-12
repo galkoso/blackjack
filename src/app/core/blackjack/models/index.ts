@@ -34,3 +34,18 @@ export interface StrategyResult {
   readonly handType: 'hard' | 'soft' | 'pair';
   readonly explanation: string;
 }
+
+export type RoundPhase = 'dealing' | 'player-turn' | 'dealer-turn' | 'round-complete';
+export type Outcome = 'win' | 'loss' | 'push' | 'blackjack' | 'bust';
+export interface HandResult {
+  readonly outcome: Outcome;
+  readonly playerValue: number;
+  readonly dealerValue: number;
+  readonly net: number;
+}
+export interface RoundState {
+  readonly phase: RoundPhase;
+  readonly game: GameState;
+  readonly rules: Rules;
+  readonly results: readonly HandResult[];
+}

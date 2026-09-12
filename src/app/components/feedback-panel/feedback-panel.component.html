@@ -1,0 +1,11 @@
+<div aria-live="polite" aria-atomic="true">
+  @if (feedback(); as f) {
+    <section class="feedback-banner" [class.correct]="f.correct" [class.incorrect]="!f.correct"><span class="feedback-symbol">{{ f.correct ? '✓' : '×' }}</span><div><h2>{{ f.correct ? 'מהלך נכון' : 'טעות מתמטית' }}</h2><p>{{ f.correct ? 'בדיוק כך. החלטה טובה לטווח הארוך.' : 'המהלך שבחרת אינו אופטימלי.' }}</p></div></section>
+    <section class="recommendation"><span class="bulb" aria-hidden="true">♧</span><div><h3>המהלך המומלץ</h3><b dir="ltr">{{ f.strategy.recommendedAction }}</b></div><span class="tiny-check">✓</span></section>
+    <section class="panel explanation"><p>{{ f.strategy.explanation }}</p><div class="choice-note">הבחירה שלך: <b dir="ltr">{{ f.chosen }}</b><span>אסטרטגיה בסיסית · S17</span></div></section>
+  } @else {
+    <section class="feedback-banner waiting"><span class="feedback-symbol">♠</span><div><h2>המהלך הבא שלך</h2><p>החלטה אחת. עוד צעד קדימה.</p></div></section>
+    <section class="recommendation pending"><span class="bulb" aria-hidden="true">♧</span><div><h3>מה המהלך המומלץ?</h3><p>בחרו פעולה כדי לגלות</p></div><span class="tiny-check">?</span></section>
+    <section class="panel explanation"><p>בבלאק ג׳ק, ההחלטה הנכונה מתחילה ביד שלך ובקלף הגלוי של הבית.</p><p>בחרו מהלך על השולחן וגלו מיד מה האסטרטגיה הבסיסית ממליצה — ולמה.</p><div class="learning-note"><span>✦</span> לא מנחשים. לומדים את המתמטיקה.</div></section>
+  }
+</div>

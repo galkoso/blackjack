@@ -1,0 +1,10 @@
+<div class="action-buttons" dir="ltr">
+  @for (button of buttons; track button.action) {
+  <button [class]="'action-button action-' + button.action.toLowerCase()" [disabled]="!legal().includes(button.action)"
+    (click)="choose.emit(button.action)" [attr.aria-label]="button.action + ' — ' + button.label"
+    [title]="button.label">
+    <span class="action-icon" aria-hidden="true">{{ button.icon }}</span><span><b>{{ button.action }}</b><small
+        dir="rtl">{{ button.label }}</small></span>
+  </button>
+  }
+</div>

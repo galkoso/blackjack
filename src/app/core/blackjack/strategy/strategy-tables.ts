@@ -17,5 +17,5 @@ export const DOUBLE_DECK: StrategyTable = {
 export const SINGLE_DECK: StrategyTable = {
   hard: { ...hard, 8: 'HHHDDHHHHH', 9: 'DDDDDHHHHH', 11: 'DDDDDDDDDD' },
   soft: { ...soft, 12: 'HHHDDHHHHH', 13: 'HHDDDHHHHH', 14: 'HHDDDHHHHH', 17: 'DDDDDHHHHH', 18: 'SddddSSHHS', 19: 'SSSSdSSSSS' },
-  pair: { ...pair, 2: 'pPPPPP HHHH'.replace(' ', ''), 3: 'ppPPPPP HHH'.replace(' ', ''), 4: 'HHpqqHHHHH', 6: 'PPPPPpHHHH', 7: 'PPPPPPpHSH' },
+  pair: { ...pair, 2: 'pPPPPPHHHH', 3: 'ppPPPPPHHH', 4: 'HHpqqHHHHH', 6: 'PPPPPpHHHH', 7: 'PPPPPPpHSH' },
 };

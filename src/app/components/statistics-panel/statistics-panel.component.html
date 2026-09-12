@@ -1,0 +1,17 @@
+<section class="panel statistics">
+  <h3><span class="heading-title"><span class="target-icon">◎</span> סטטיסטיקות אימון</span><span
+      class="small-caption">ההתקדמות שלך</span></h3>
+  <div class="stats-grid">
+    <div><span>סה״כ החלטות</span><b>{{ stats().total }}</b></div>
+    <div><span>נכונות</span><b class="green">{{ stats().correct }}</b></div>
+    <div><span>טעויות</span><b class="red">{{ stats().total - stats().correct }}</b></div>
+    <div><span>רצף נוכחי <i>♨</i></span><b>{{ stats().streak }}</b></div>
+  </div>
+  <div class="accuracy-label"><span>דיוק כולל</span><strong>{{ accuracy() }}<small>%</small></strong></div>
+  <div class="accuracy-track" role="progressbar" aria-label="דיוק כולל" [attr.aria-valuenow]="accuracy()"
+    aria-valuemin="0" aria-valuemax="100">
+    <div [style.width.%]="accuracy()"></div>
+  </div>
+  <div class="best-streak"><span>✧ &nbsp; הרצף הטוב ביותר</span><b>{{ stats().best }} <small>החלטות נכונות</small></b>
+  </div>
+</section>

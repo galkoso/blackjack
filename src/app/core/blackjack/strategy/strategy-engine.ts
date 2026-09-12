@@ -12,9 +12,8 @@ export function getOptimalAction(playerHand: Hand, dealerUpCard: Card, rules: Ru
   const handType = pair ? 'pair' : soft ? 'soft' : 'hard';
   const fallback = (soft ? table.soft[value] : table.hard[value]) ?? 'HHHHHHHHHH';
   const row = pair && legal.includes('Split') ? table.pair[cardValue(playerHand.cards[0])] : fallback;
-  let cell = row[dealer - 2] as Cell;
-  if (cell === 'p') cell = rules.doubleAfterSplit ? 'P' : 'H';
-  if (cell === 'q') cell = rules.doubleAfterSplit ? 'P' : 'D';
+  const cell = ((row[dealer - 2] as Cell) === 'p' ? (rules.doubleAfterSplit ? 'P' : 'H')
+    : (row[dealer - 2] as Cell) === 'q' ? (rules.doubleAfterSplit ? 'P' : 'D') : row[dealer - 2]) as Cell;
   const recommendedAction: Action = cell === 'P' ? 'Split' : cell === 'S' ? 'Stand' : cell === 'D' || cell === 'd'
     ? legal.includes('Double') ? 'Double' : cell === 'd' ? 'Stand' : 'Hit' : 'Hit';
   const kind = handType === 'pair' ? 'זוג' : soft ? 'יד רכה' : 'יד קשה';

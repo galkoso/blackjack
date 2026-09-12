@@ -18,23 +18,23 @@ export function applyAction(state: GameState, action: Action, rules: Rules): Gam
   const hand = state.hands[state.activeHand];
   if (state.finished || !hand || !legalActions(hand, rules, state.hands.length).includes(action)) throw new Error('Illegal action');
   const hands = [...state.hands];
-  let shoe = [...state.shoe];
-  const draw = (): Card => { const result = drawCard(shoe); shoe = result.shoe; return result.card; };
+  const shoe = { cards: [...state.shoe] };
+  const draw = (): Card => { const result = drawCard(shoe.cards); shoe.cards = result.shoe; return result.card; };
   if (action === 'Split') {
     const splitAces = hand.cards[0].rank === 'A';
     hands.splice(state.activeHand, 1, ...hand.cards.map(card => ({ cards: [card, draw()], fromSplit: true, splitAces })));
   } else if (action === 'Stand') hands[state.activeHand] = { ...hand, stood: true };
   else hands[state.activeHand] = { ...hand, cards: [...hand.cards, draw()], doubled: action === 'Double' };
-  let activeHand = state.activeHand;
-  while (activeHand < hands.length && legalActions(hands[activeHand], rules, hands.length).length === 0) activeHand++;
-  return { ...state, shoe, hands, activeHand, finished: activeHand === hands.length };
+  const nextHandOffset = hands.slice(state.activeHand).findIndex(candidate => legalActions(candidate, rules, hands.length).length > 0);
+  const activeHand = nextHandOffset === -1 ? hands.length : state.activeHand + nextHandOffset;
+  return { ...state, shoe: shoe.cards, hands, activeHand, finished: activeHand === hands.length };
 }
 export function playDealer(state: GameState): GameState {
   if (!state.finished) throw new Error('Player hands must finish first');
-  let shoe = [...state.shoe];
+  const shoe = { cards: [...state.shoe] };
   const dealer = [...state.dealer];
-  while (calculateHand(dealer).value < 17) { const result = drawCard(shoe); dealer.push(result.card); shoe = result.shoe; }
-  return { ...state, shoe, dealer };
+  while (calculateHand(dealer).value < 17) { const result = drawCard(shoe.cards); dealer.push(result.card); shoe.cards = result.shoe; }
+  return { ...state, shoe: shoe.cards, dealer };
 }
 /** Net return per original unit; doubles multiply the settlement, split 21 is not blackjack. */
 export function settleHand(hand: Hand, dealer: readonly Card[], rules: Rules): number {

@@ -1,0 +1,26 @@
+<dialog #dialog class="settings-dialog" aria-labelledby="settings-title" (cancel)="close.emit()"
+    (click)="backdrop($event)">
+    <div class="dialog-content">
+        <header>
+            <div><span class="eyebrow">YOUR TABLE, YOUR PRACTICE</span>
+                <h2 id="settings-title">הגדרות האימון</h2>
+            </div><button class="close-button" aria-label="סגירת הגדרות" (click)="close.emit()">×</button>
+        </header>
+        <p class="dialog-intro">התאימו את השולחן למשחק שאתם רוצים לתרגל.</p>
+        <fieldset>
+            <legend>מספר חפיסות</legend>
+            <div class="deck-options" dir="ltr">@for (count of counts; track count) { <label
+                    [class.selected]="draft() === count"><input type="radio" name="decks" [value]="count"
+                        [checked]="draft() === count" (change)="draft.set(count)"><span>{{ count }}</span></label> }
+            </div><small>טבלת האסטרטגיה מתעדכנת בהתאם למספר החפיסות.</small>
+        </fieldset>
+        <div class="settings-rules">
+            <div><span>הדילר עומד על 17</span><b>✓ פעיל</b></div>
+            <div><span>הדילר עומד על Soft 17</span><b>S17</b></div>
+            <div><span>הכפלה לאחר פיצול</span><b>✓ מותרת</b></div>
+            <div><span>תשלום בלאק ג׳ק</span><b dir="ltr">3 : 2</b></div>
+        </div>
+        <p class="settings-footnote">שינוי מספר החפיסות יתחיל יד חדשה. הסטטיסטיקות נשמרות במכשיר הזה.</p><button
+            class="save-settings" (click)="save.emit(draft())">שמירת הגדרות <span>←</span></button>
+    </div>
+</dialog>

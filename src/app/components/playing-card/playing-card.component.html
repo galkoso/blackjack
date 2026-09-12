@@ -1,0 +1,10 @@
+<div class="card-motion" role="img" [attr.aria-label]="hidden() ? 'קלף מוסתר' : (card()?.rank + ' ' + card()?.suit)">
+  <div class="card-flipper" [class.face-down]="hidden()">
+    <div class="playing-card card-front" [class.red-card]="card()?.suit === '♥' || card()?.suit === '♦'" aria-hidden="true">
+      <span class="card-corner"><b>{{ card()?.rank }}</b><span>{{ card()?.suit }}</span></span>
+      <span class="card-suit">{{ card()?.suit }}</span>
+      <span class="card-corner corner-bottom"><b>{{ card()?.rank }}</b><span>{{ card()?.suit }}</span></span>
+    </div>
+    <div class="playing-card card-back" aria-hidden="true"><div class="back-pattern"><span>♠</span></div></div>
+  </div>
+</div>
