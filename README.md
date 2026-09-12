@@ -56,6 +56,26 @@ Chart sources were checked on 2026-09-12. Table columns are dealer values 2 thro
 
 The Hebrew explanations describe the reason for the table action without inventing percentages or claiming a guaranteed winning outcome.
 
+## Native mobile apps with Capacitor
+
+The Angular production output is packaged from `dist/trainer/browser`. The application remains frontend-only, works from its bundled assets offline, and continues to store settings and statistics in `localStorage` inside the native WebView.
+
+```bash
+ng build
+npx cap sync
+
+npx cap open ios
+npx cap open android
+```
+
+After future Angular changes, use this workflow:
+
+```text
+change Angular code → build → cap sync → open/test native app
+```
+
+You can also run `npm run build:mobile` to perform the production build and Capacitor sync together. Use `npm run cap:ios` or `npm run cap:android` to open a native project.
+
 ## Tests
 
 `npm test` runs 41 pure TypeScript unit tests, including every requested example, deck-specific differences, DAS and double fallbacks, multiple aces, shoe multiplicities, deterministic shuffle, immutable transitions, split-ace restrictions, settlement and an exhaustive legal-action check across initial rank combinations and all deck settings.
