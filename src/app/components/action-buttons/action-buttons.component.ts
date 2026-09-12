@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { Action } from '../../core/blackjack/models';
+import { ACTION_OPTIONS } from '../../consts/actions.consts';
+
 @Component({
   selector: 'app-action-buttons', changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './action-buttons.component.html',
@@ -7,8 +9,5 @@ import { Action } from '../../core/blackjack/models';
 export class ActionButtonsComponent {
   readonly legal = input.required<readonly Action[]>();
   readonly choose = output<Action>();
-  readonly buttons: readonly { action: Action; icon: string; label: string }[] = [
-    { action: 'Hit', icon: '+', label: 'לקחת קלף' }, { action: 'Stand', icon: '✋', label: 'לעמוד' },
-    { action: 'Double', icon: '◉', label: 'להכפיל' }, { action: 'Split', icon: '♧', label: 'לפצל' },
-  ];
+  readonly buttons = ACTION_OPTIONS;
 }

@@ -58,8 +58,10 @@ describe('shoes and game transitions', () => {
   });
   it('split aces receive one card only; no resplitting aces', () => {
     const state = applyAction(dealGame(cards('A', '6', 'A', '10', 'A', 'K')), 'Split', DEFAULT_RULES);
-    expect(state.finished).toBe(true);
-    expect(legalActions(state.hands[0], DEFAULT_RULES, 2)).toEqual([]);
+    expect(state.finished).toBe(false);
+    expect(legalActions(state.hands[0], DEFAULT_RULES, 2)).toContain('Hit');
+    expect(legalActions(state.hands[0], DEFAULT_RULES, 2)).toContain('Stand');
+    expect(legalActions(state.hands[0], DEFAULT_RULES, 2)).not.toContain('Split');
     expect(isBlackjack(state.hands[1])).toBe(false);
   });
   it('hits, stands, rejects illegal actions and respects S17', () => {

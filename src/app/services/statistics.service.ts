@@ -27,4 +27,8 @@ export class StatisticsService {
     });
     this.storage.write('blackjack.statistics.v1', this.stats());
   }
+  clear(): void {
+    this.state.set(EMPTY);
+    this.storage.write('blackjack.statistics.v1', EMPTY);
+  }
 }

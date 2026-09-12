@@ -48,10 +48,15 @@ describe('pure round state machine', () => {
     expect(done.game.hands[0].cards).toHaveLength(3);
     expect(done.results[0]).toMatchObject({ outcome: 'win', net: 2 });
   });
-  it('finishes split aces automatically and pays split 21 at 1:1', () => {
-    const done = finish(takeAction(finishDealing(round('A', '10', 'A', '8', 'K', '9')), 'Split'));
-    expect(done.results.map(r => r.net)).toEqual([1, 1]);
-    expect(done.results.map(r => r.outcome)).toEqual(['win', 'win']);
+  it('keeps split aces playable without allowing them to be re-split', () => {
+    const split = takeAction(finishDealing(round('A', '10', 'A', '8', 'K', '9', '2')), 'Split');
+    expect(split.phase).toBe('player-turn');
+    expect(split.game.activeHand).toBe(1);
+    expect(split.game.hands[0].cards).toHaveLength(2);
+    expect(split.game.hands[1].cards).toHaveLength(2);
+    expect(() => takeAction(split, 'Split')).toThrow();
+    const stood = takeAction(split, 'Stand');
+    expect(stood.phase).toBe('dealer-turn');
   });
   it('continues the other split hand after a bust and settles mixed results', () => {
     const split = takeAction(finishDealing(round('8', '10', '8', '8', 'K', '2', 'K', '9')), 'Split');

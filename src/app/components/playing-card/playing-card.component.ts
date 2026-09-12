@@ -1,5 +1,6 @@
 import { afterNextRender, ChangeDetectionStrategy, Component, ElementRef, inject, input } from '@angular/core';
 import { Card } from '../../core/blackjack/models';
+
 @Component({
   selector: 'app-playing-card', changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './playing-card.component.html', host: { class: 'dealt-card' },
@@ -7,6 +8,7 @@ import { Card } from '../../core/blackjack/models';
 export class PlayingCardComponent {
   readonly card = input<Card>(); readonly hidden = input(false);
   private readonly element = inject<ElementRef<HTMLElement>>(ElementRef);
+
   constructor() {
     afterNextRender(() => {
       const host = this.element.nativeElement;

@@ -8,7 +8,7 @@ import { getOptimalAction } from '../core/blackjack/strategy/strategy-engine';
 import { SettingsService } from './settings.service';
 import { StatisticsService } from './statistics.service';
 export interface HandView { readonly cards: readonly Card[]; readonly value: number | null; readonly soft: boolean; readonly doubled: boolean; readonly active: boolean; readonly result: HandResult | undefined; readonly bust: boolean }
-export interface Feedback { readonly correct: boolean; readonly chosen: Action; readonly strategy: StrategyResult }
+export interface Feedback { readonly correct: boolean; readonly strategy: StrategyResult }
 export const SHOE_FACTORY = new InjectionToken<(rules: Rules) => readonly Card[]>('Shoe factory', {
   providedIn: 'root', factory: () => rules => shuffleShoe(createShoe(rules.decks), Math.random),
 });
@@ -98,7 +98,7 @@ export class BlackjackGameService {
     const strategy = getOptimalAction(hand, previous.game.dealer[0], previous.rules, previous.game.hands.length);
     const correct = strategy.recommendedAction === action;
     this.busy.set(true);
-    this.feedbackState.set({ correct, chosen: action, strategy });
+    this.feedbackState.set({ correct, strategy });
     this.statistics.record({
       player: hand.cards.map(c => c.rank).join(', '), dealer: previous.game.dealer[0].rank,
       action, recommended: strategy.recommendedAction, correct, decks: previous.rules.decks

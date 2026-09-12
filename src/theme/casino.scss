@@ -117,6 +117,19 @@ app-recent-decisions {
     background: #1b2830;
 }
 
+.header-actions { display: flex; align-items: center; gap: 9px; }
+.stats-button { width: 43px; height: 43px; border: 1px solid #34424c; border-radius: 7px; color: var(--gold); background: #101d25; font-size: 25px; }
+.table-feedback { position: absolute; left: 50%; bottom: 27%; width: min(79%, 690px); transform: translateX(-50%); z-index: 4; }
+.table-feedback .feedback-banner { width: 100%; text-align: right; cursor: pointer; }
+.table-feedback .feedback-banner small { display: block; margin-top: 7px; color: #b8d5c7; }
+.mobile-sheet-backdrop { position: fixed; inset: 0; z-index: 20; display: flex; align-items: flex-end; background: #0009; }
+.mobile-sheet { position: relative; width: 100%; max-height: 88svh; overflow: auto; padding: 28px 16px calc(20px + env(safe-area-inset-bottom)); border-radius: 20px 20px 0 0; background: #091821; box-shadow: 0 -8px 30px #0009; }
+.sheet-close { position: absolute; top: 10px; left: 14px; width: 34px; height: 34px; border: 1px solid #48606e; border-radius: 50%; color: var(--text); background: transparent; font-size: 25px; }
+.explanation-sheet h2 { margin-bottom: 14px; color: var(--gold); }
+.explanation-sheet p { line-height: 1.7; color: #d3dde1; }
+
+@media (min-width: 769px) { .mobile-sheet-backdrop { display: none; } }
+
 .trainer-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(320px, 27%);
@@ -781,6 +794,20 @@ app-recent-decisions {
     min-height: 89px;
 }
 
+.feedback-banner.incorrect + .recommendation {
+    border-color: #ee4459;
+    background: linear-gradient(110deg, #4d2028, #2b171d);
+}
+
+.feedback-banner.incorrect + .recommendation b {
+    color: #fff1e8;
+}
+
+.feedback-banner.correct + .recommendation {
+    border-color: #29ba8c;
+    background: linear-gradient(110deg, #0b4435, #0b2c24);
+}
+
 .recommendation h3 {
     font-size: 14px;
     margin-bottom: 7px;
@@ -1442,6 +1469,30 @@ fieldset>small {
     }
 }
 
+@media (max-width: 768px) {
+    .app-header { height: 64px; padding: 0 14px; }
+    .brand { gap: 8px; }
+    .brand-spade { font-size: 38px; }
+    .brand h1 { font-size: 18px; }
+    .settings-button { font-size: 0; padding: 8px 10px; }
+    .settings-button span { font-size: 21px; }
+    .trainer-layout { display: block; }
+    .table-shell { height: calc(100svh - 64px); min-height: 620px; }
+    .sidebar { display: none; }
+    .table-feedback { bottom: 23%; width: 82%; }
+    .table-feedback .feedback-banner { min-height: 78px; padding: 12px 14px; }
+    .table-feedback .feedback-banner h2 { font-size: 18px; }
+    .table-feedback .feedback-banner p { font-size: 11px; }
+    .table-feedback .feedback-symbol { width: 36px; height: 36px; font-size: 28px; }
+    .table-controls { bottom: calc(2.8% + env(safe-area-inset-bottom)); width: 92%; }
+    .action-buttons { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 400px) {
+    .action-buttons { grid-template-columns: repeat(2, 1fr); }
+    .table-feedback { bottom: 29%; }
+}
+
 @media (max-width: 560px) {
     .app-header {
         height: 72px;
@@ -1651,6 +1702,7 @@ fieldset>small {
         gap: 7px;
         min-height: 79px;
         border-radius: 7px;
+        padding: 9px 3px 7px;
     }
 
     .action-button b {

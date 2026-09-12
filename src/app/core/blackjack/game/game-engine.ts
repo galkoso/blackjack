@@ -2,10 +2,10 @@ import { Action, Card, GameState, Hand, Rules } from '../models';
 import { calculateHand, isBlackjack, isPair } from './hand';
 import { drawCard } from './deck';
 export function legalActions(hand: Hand, rules: Rules, handCount = 1): Action[] {
-  if (hand.stood || hand.doubled || hand.splitAces || calculateHand(hand.cards).value >= 21) return [];
+  if (hand.stood || hand.doubled || calculateHand(hand.cards).value >= 21) return [];
   const actions: Action[] = ['Hit', 'Stand'];
   if (hand.cards.length === 2 && (!hand.fromSplit || rules.doubleAfterSplit)) actions.push('Double');
-  if (isPair(hand.cards) && handCount < rules.maxHands) actions.push('Split');
+  if (!hand.splitAces && isPair(hand.cards) && handCount < rules.maxHands) actions.push('Split');
   return actions;
 }
 export function dealGame(shoe: readonly Card[]): GameState {
